@@ -38,6 +38,12 @@ export type HtmlGenerationMode =
   | "styled-components"
   | "svelte";
 
+// Figma component info type (only for INSTANCE nodes with valid mainComponent)
+type FigmaComponentInfo = {
+  componentName: string;
+  properties: Record<string, any>;
+};
+
 // CSS Collection for external stylesheet or styled-components
 interface CSSCollection {
   [className: string]: {
@@ -45,6 +51,7 @@ interface CSSCollection {
     nodeType?: string;
     element?: string; // Base HTML element to use
     componentName: string; // Required for type safety, only used in styled-components mode
+    figmaComponent?: FigmaComponentInfo;
   };
 }
 
@@ -134,6 +141,28 @@ export function getComponentName(
   return name;
 }
 
+// Generate metadata comment from Figma component info
+function generateMetadataComment(figmaComponent?: FigmaComponentInfo): string {
+  if (!figmaComponent) {
+    return "";
+  }
+
+  let comment = `/* Component ${figmaComponent.componentName}`;
+
+  if (Object.keys(figmaComponent.properties).length > 0) {
+    const propsStr = Object.entries(figmaComponent.properties)
+      .map(([key, prop]) => {
+        // Extract value from ComponentProperty object
+        const value = typeof prop === 'object' && prop && 'value' in prop ? prop.value : prop;
+        return `${key}="${value}"`;
+      })
+      .join(", ");
+    comment += `(${propsStr})`;
+  }
+
+  return `${comment} */\n`;
+}
+
 // Get the collected CSS as a string with improved formatting
 export function getCollectedCSS(): string {
   if (Object.keys(cssCollection).length === 0) {
@@ -141,9 +170,12 @@ export function getCollectedCSS(): string {
   }
 
   return Object.entries(cssCollection)
-    .map(([className, { styles }]) => {
+    .map(([className, { styles, figmaComponent }]) => {
       if (!styles.length) return "";
-      return `.${className} {\n  ${styles.join(";\n  ")}${styles.length ? ";" : ""}\n}`;
+
+      const metadataComment = generateMetadataComment(figmaComponent);
+
+      return `${metadataComment}.${className} {\n  ${styles.join(";\n  ")}${styles.length ? ";" : ""}\n}`;
     })
     .filter(Boolean)
     .join("\n\n");
@@ -154,14 +186,16 @@ export function generateStyledComponents(): string {
   const components: string[] = [];
 
   Object.entries(cssCollection).forEach(
-    ([className, { styles, componentName, element, nodeType }]) => {
+    ([className, { styles, componentName, element, nodeType, figmaComponent }]) => {
       // Skip if no styles
       if (!styles.length) return;
+
+      const metadataComment = generateMetadataComment(figmaComponent);
 
       // Determine base HTML element - defaults to div
       const baseElement = element || (nodeType === "TEXT" ? "p" : "div");
 
-      const styledComponent = `const ${componentName} = styled.${baseElement}\`
+      const styledComponent = `${metadataComment}const ${componentName} = styled.${baseElement}\`
   ${styles.join(";\n  ")}${styles.length ? ";" : ""}
 \`;`;
 
@@ -292,12 +326,14 @@ function generateSvelteComponent(html: string): string {
   // Build CSS classes similar to styled-components but for Svelte
   const cssRules: string[] = [];
 
-  Object.entries(cssCollection).forEach(([className, { styles }]) => {
+  Object.entries(cssCollection).forEach(([className, { styles, figmaComponent }]) => {
     if (!styles.length) return;
+
+    const metadataComment = generateMetadataComment(figmaComponent);
 
     // Always use class selector to avoid conflicts
     cssRules.push(
-      `.${className} {\n  ${styles.join(";\n  ")}${styles.length ? ";" : ""}\n}`,
+      `${metadataComment}.${className} {\n  ${styles.join(";\n  ")}${styles.length ? ";" : ""}\n}`,
     );
   });
 
@@ -426,10 +462,10 @@ const convertNode = (settings: HTMLSettings) => async (node: SceneNode) => {
   }
 };
 
-const htmlWrapSVG = (
+const htmlWrapSVG = async (
   node: AltNode<SceneNode>,
   settings: HTMLSettings,
-): string => {
+): Promise<string> => {
   if (node.svg === "") return "";
 
   const builder = new HtmlDefaultBuilder(node, settings)
@@ -440,7 +476,7 @@ const htmlWrapSVG = (
   // to add inline CSS variables in most cases. The browser will use the fallbacks
   // if the variables aren't defined in the CSS.
 
-  return `\n<div${builder.build()}>\n${indentString(node.svg ?? "")}</div>`;
+  return `\n<div${await builder.build()}>\n${indentString(node.svg ?? "")}</div>`;
 };
 
 const htmlGroup = async (
@@ -459,7 +495,7 @@ const htmlGroup = async (
   const builder = new HtmlDefaultBuilder(node, settings).commonPositionStyles();
 
   if (builder.styles) {
-    const attr = builder.build();
+    const attr = await builder.build();
     const generator = await htmlWidgetGenerator(node.children, settings);
     return `\n<div${attr}>${indentString(generator)}\n</div>`;
   }
@@ -467,7 +503,7 @@ const htmlGroup = async (
 };
 
 // For htmlText and htmlContainer, use the htmlGenerationMode to determine styling approach
-const htmlText = (node: TextNode, settings: HTMLSettings): string => {
+const htmlText = async (node: TextNode, settings: HTMLSettings): Promise<string> => {
   let layoutBuilder = new HtmlTextBuilder(node, settings)
     .commonPositionStyles()
     .textTrim()
@@ -482,7 +518,7 @@ const htmlText = (node: TextNode, settings: HTMLSettings): string => {
   // For styled-components mode
   if (mode === "styled-components") {
     // Build wrapper to store in cssCollection
-    layoutBuilder.build();
+    await layoutBuilder.build();
 
     const wrapperComponentName =
       cssCollection[layoutBuilder.cssClassName!]?.componentName || "div";
@@ -551,7 +587,7 @@ const htmlText = (node: TextNode, settings: HTMLSettings): string => {
   }
 
   // Always use div as container to be consistent with styled-components
-  return `\n<div${layoutBuilder.build()}>${content}</div>`;
+  return `\n<div${await layoutBuilder.build()}>${content}</div>`;
 };
 
 const htmlFrame = async (
@@ -625,7 +661,7 @@ const htmlContainer = async (
       }
     }
 
-    const build = builder.build(additionalStyles);
+    const build = await builder.build(additionalStyles);
     const mode = settings.htmlGenerationMode || "html";
 
     // For styled-components mode
@@ -669,18 +705,18 @@ const htmlSection = async (
     .applyFillsToStyle(node.fills, "background");
 
   if (childrenStr) {
-    return `\n<div${builder.build()}>${indentString(childrenStr)}\n</div>`;
+    return `\n<div${await builder.build()}>${indentString(childrenStr)}\n</div>`;
   } else {
-    return `\n<div${builder.build()}></div>`;
+    return `\n<div${await builder.build()}></div>`;
   }
 };
 
-const htmlLine = (node: LineNode, settings: HTMLSettings): string => {
+const htmlLine = async (node: LineNode, settings: HTMLSettings): Promise<string> => {
   const builder = new HtmlDefaultBuilder(node, settings)
     .commonPositionStyles()
     .commonShapeStyles();
 
-  return `\n<div${builder.build()}></div>`;
+  return `\n<div${await builder.build()}></div>`;
 };
 
 export const htmlCodeGenTextStyles = (settings: HTMLSettings) => {
