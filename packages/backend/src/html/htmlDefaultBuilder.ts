@@ -422,7 +422,7 @@ export class HtmlDefaultBuilder {
     return this;
   }
 
-  build(additionalStyle: Array<string> = []): string {
+  async build(additionalStyle: Array<string> = []): Promise<string> {
     this.addStyles(...additionalStyle);
 
     // Different handling based on generation mode
@@ -435,7 +435,7 @@ export class HtmlDefaultBuilder {
       this.styles.length > 0 &&
       this.cssClassName
     ) {
-      this.storeStyles();
+      await this.storeStyles();
       return ""; // Return empty string as we're using the component directly
     }
 
@@ -472,7 +472,7 @@ export class HtmlDefaultBuilder {
     // For Svelte mode, we use classes
     if (mode === "svelte" && this.styles.length > 0 && this.cssClassName) {
       classNames.push(this.cssClassName);
-      this.storeStyles();
+      await this.storeStyles();
       this.styles = []; // Clear inline styles for Svelte
     }
     // For styled-components, we need the class but keep styles for the component
@@ -482,7 +482,7 @@ export class HtmlDefaultBuilder {
       this.cssClassName
     ) {
       classNames.push(this.cssClassName);
-      this.storeStyles();
+      await this.storeStyles();
       // Keep styles for styled-components
     }
 
@@ -504,7 +504,7 @@ export class HtmlDefaultBuilder {
   }
 
   // Extract style storage into a method to avoid duplication
-  private storeStyles(): void {
+  private async storeStyles(): Promise<void> {
     if (!this.cssClassName || this.styles.length === 0) return;
 
     // Convert to CSS format if needed
@@ -528,11 +528,60 @@ export class HtmlDefaultBuilder {
 
     const componentName = getComponentName(nodeName, this.cssClassName, element);
 
+    // Fetch Figma component info for INSTANCE nodes (mainComponent might be in another page)
+    let figmaComponent:
+      | {
+          componentName: string;
+          properties: Record<string, any>;
+        }
+      | undefined;
+
+    if (this.node.type === "INSTANCE") {
+      const instanceNode = this.node as InstanceNode;
+
+      try {
+        let mainComponent: ComponentNode | null = null;
+        const componentId = (instanceNode as any).componentId;
+
+        if (componentId) {
+          const node = await figma.getNodeByIdAsync(componentId);
+          if (node && node.type === "COMPONENT") {
+            mainComponent = node as ComponentNode;
+          }
+        }
+        // Try async method (for dynamic page loading)
+        else if (typeof instanceNode.getMainComponentAsync === 'function') {
+          mainComponent = await instanceNode.getMainComponentAsync();
+        }
+        // Fallback to synchronous property
+        else if (instanceNode.mainComponent) {
+          mainComponent = instanceNode.mainComponent;
+        }
+
+        if (mainComponent) {
+          // Get the component name - prefer parent ComponentSet name if it exists
+          let componentName = mainComponent.name;
+
+          if (mainComponent.parent && mainComponent.parent.type === "COMPONENT_SET") {
+            componentName = mainComponent.parent.name;
+          }
+
+          figmaComponent = {
+            componentName: componentName,
+            properties: instanceNode.componentProperties || {},
+          };
+        }
+      } catch (error) {
+        // Silently handle errors (e.g., component not accessible)
+      }
+    }
+
     cssCollection[this.cssClassName] = {
       styles: cssStyles,
       nodeType: this.node.type,
       element: element,
       componentName: componentName,
+      figmaComponent: figmaComponent,
     };
   }
 }
