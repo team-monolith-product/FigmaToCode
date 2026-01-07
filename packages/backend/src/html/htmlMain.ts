@@ -498,26 +498,15 @@ const htmlText = (node: TextNode, settings: HTMLSettings): string => {
       // Use sub/sup from segment, otherwise default to p for wrapper
       const element = (segmentElement === "sub" || segmentElement === "sup") ? segmentElement : "p";
 
-      // Build and store in cssCollection
-      layoutBuilder.build();
-
-      // Override element type for sub/sup
-      const cssEntry = cssCollection[layoutBuilder.cssClassName!];
-      if (cssEntry && element !== "p") {
-        cssEntry.element = element;
-        cssEntry.componentName = getComponentName(
-          (layoutBuilder as any).node?.uniqueName || (layoutBuilder as any).node?.name,
-          layoutBuilder.cssClassName!,
-          element,
-        );
-      }
+      // Build and store in cssCollection with element override
+      layoutBuilder.build([], element);
 
       // Clean up segment's separate CSS entry
       if (segment.className) {
         delete cssCollection[segment.className];
       }
 
-      const componentName = cssEntry?.componentName || "p";
+      const componentName = cssCollection[layoutBuilder.cssClassName!]?.componentName || "p";
       return `\n<${componentName}>${segment.text}</${componentName}>`;
     }
 
