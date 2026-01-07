@@ -1,0 +1,368 @@
+{
+    "id": "5127:1786",
+    "name": "AlertDialogue",
+    "type": "FRAME",
+    "scrollBehavior": "SCROLLS",
+    "children": [
+        {
+            "id": "5127:1791",
+            "name": "영어가 아닌 제목",
+            "type": "TEXT",
+            "scrollBehavior": "SCROLLS",
+            "blendMode": "PASS_THROUGH",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0,
+                        "g": 0,
+                        "b": 0,
+                        "a": 1
+                    }
+                }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "strokeAlign": "OUTSIDE",
+            "absoluteBoundingBox": {
+                "x": 1735,
+                "y": 266,
+                "width": 133,
+                "height": 28
+            },
+            "absoluteRenderBounds": {
+                "x": 1736.134765625,
+                "y": 271.0234375,
+                "width": 130.92578125,
+                "height": 17.8125
+            },
+            "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+            },
+            "layoutAlign": "INHERIT",
+            "layoutGrow": 0,
+            "layoutSizingHorizontal": "FIXED",
+            "layoutSizingVertical": "FIXED",
+            "characters": "영어가 아닌 제목",
+            "characterStyleOverrides": [],
+            "styleOverrideTable": {},
+            "lineTypes": [
+                "NONE"
+            ],
+            "lineIndentations": [
+                0
+            ],
+            "style": {
+                "fontFamily": "Pretendard",
+                "fontPostScriptName": "Pretendard-Bold",
+                "fontStyle": "Bold",
+                "fontWeight": 700,
+                "textAutoResize": "WIDTH_AND_HEIGHT",
+                "fontSize": 20,
+                "textAlignHorizontal": "CENTER",
+                "textAlignVertical": "CENTER",
+                "letterSpacing": 0.25,
+                "lineHeightPx": 28,
+                "lineHeightPercent": 117.31587982177734,
+                "lineHeightPercentFontSize": 140,
+                "lineHeightUnit": "PIXELS"
+            },
+            "layoutVersion": 5,
+            "styles": {
+                "text": "5001:14"
+            },
+            "effects": [],
+            "interactions": [],
+            "cumulativeRotation": 0,
+            "uniqueName": "영어가 아닌 제목",
+            "styledTextSegments": [
+                {
+                    "characters": "영어가 아닌 제목",
+                    "start": 0,
+                    "end": 9,
+                    "fontSize": 20,
+                    "fontName": {
+                        "family": "Pretendard",
+                        "style": "Bold"
+                    },
+                    "fontWeight": 700,
+                    "textDecoration": "NONE",
+                    "textCase": "ORIGINAL",
+                    "lineHeight": {
+                        "unit": "PIXELS",
+                        "value": 28
+                    },
+                    "letterSpacing": {
+                        "unit": "PIXELS",
+                        "value": 0.25
+                    },
+                    "fills": [
+                        {
+                            "type": "SOLID",
+                            "visible": true,
+                            "opacity": 1,
+                            "blendMode": "NORMAL",
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
+                            },
+                            "boundVariables": {}
+                        }
+                    ],
+                    "textStyleId": "S:c91ecb326559e8cdaac2024537cc7b1b27a7bf63,174:670",
+                    "fillStyleId": "",
+                    "listOptions": {
+                        "type": "NONE"
+                    },
+                    "indentation": 0,
+                    "hyperlink": null,
+                    "openTypeFeatures": {},
+                    "uniqueId": "_span"
+                }
+            ],
+            "fontFamily": "Pretendard",
+            "fontPostScriptName": "Pretendard-Bold",
+            "fontStyle": "Bold",
+            "fontWeight": 700,
+            "textAutoResize": "WIDTH_AND_HEIGHT",
+            "fontSize": 20,
+            "textAlignHorizontal": "CENTER",
+            "textAlignVertical": "CENTER",
+            "letterSpacing": 0.25,
+            "lineHeightPx": 28,
+            "lineHeightPercent": 117.31587982177734,
+            "lineHeightPercentFontSize": 140,
+            "lineHeightUnit": "PIXELS",
+            "width": 133,
+            "height": 28,
+            "x": 323,
+            "y": 24,
+            "canBeFlattened": false,
+            "layoutMode": "NONE",
+            "primaryAxisAlignItems": "MIN",
+            "counterAxisAlignItems": "MIN"
+        },
+        {
+            "id": "5127:1820",
+            "name": "영어가 아닌 본문",
+            "type": "TEXT",
+            "scrollBehavior": "SCROLLS",
+            "blendMode": "PASS_THROUGH",
+            "fills": [
+                {
+                    "blendMode": "NORMAL",
+                    "type": "SOLID",
+                    "color": {
+                        "r": 0,
+                        "g": 0,
+                        "b": 0,
+                        "a": 1
+                    }
+                }
+            ],
+            "strokes": [],
+            "strokeWeight": 1,
+            "strokeAlign": "OUTSIDE",
+            "absoluteBoundingBox": {
+                "x": 1436,
+                "y": 318,
+                "width": 432,
+                "height": 20
+            },
+            "absoluteRenderBounds": {
+                "x": 1436.71875,
+                "y": 321.328125,
+                "width": 103.375,
+                "height": 14.03125
+            },
+            "constraints": {
+                "vertical": "TOP",
+                "horizontal": "LEFT"
+            },
+            "layoutAlign": "STRETCH",
+            "layoutGrow": 0,
+            "layoutSizingHorizontal": "FILL",
+            "layoutSizingVertical": "FIXED",
+            "characters": "영어가 아닌 본문",
+            "characterStyleOverrides": [],
+            "styleOverrideTable": {},
+            "lineTypes": [
+                "NONE"
+            ],
+            "lineIndentations": [
+                0
+            ],
+            "style": {
+                "fontFamily": "Pretendard",
+                "fontPostScriptName": "Pretendard-Medium",
+                "fontStyle": "Medium",
+                "fontWeight": 500,
+                "textAutoResize": "HEIGHT",
+                "textTruncation": "ENDING",
+                "maxLines": 1,
+                "fontSize": 16,
+                "textAlignHorizontal": "LEFT",
+                "textAlignVertical": "TOP",
+                "letterSpacing": 0,
+                "lineHeightPx": 20,
+                "lineHeightPercent": 104.7463150024414,
+                "lineHeightPercentFontSize": 125,
+                "lineHeightUnit": "PIXELS"
+            },
+            "layoutVersion": 5,
+            "styles": {
+                "text": "5127:816"
+            },
+            "effects": [],
+            "interactions": [],
+            "cumulativeRotation": 0,
+            "uniqueName": "영어가 아닌 본문",
+            "styledTextSegments": [
+                {
+                    "characters": "영어가 아닌 본문",
+                    "start": 0,
+                    "end": 9,
+                    "fontSize": 16,
+                    "fontName": {
+                        "family": "Pretendard",
+                        "style": "Medium"
+                    },
+                    "fontWeight": 500,
+                    "textDecoration": "NONE",
+                    "textCase": "ORIGINAL",
+                    "lineHeight": {
+                        "unit": "PIXELS",
+                        "value": 20
+                    },
+                    "letterSpacing": {
+                        "unit": "PIXELS",
+                        "value": 0
+                    },
+                    "fills": [
+                        {
+                            "type": "SOLID",
+                            "visible": true,
+                            "opacity": 1,
+                            "blendMode": "NORMAL",
+                            "color": {
+                                "r": 0,
+                                "g": 0,
+                                "b": 0
+                            },
+                            "boundVariables": {}
+                        }
+                    ],
+                    "textStyleId": "S:dd2073fba976ef656e94b408999bc4854b3ecf7a,174:702",
+                    "fillStyleId": "",
+                    "listOptions": {
+                        "type": "NONE"
+                    },
+                    "indentation": 0,
+                    "hyperlink": null,
+                    "openTypeFeatures": {},
+                    "uniqueId": "_span"
+                }
+            ],
+            "fontFamily": "Pretendard",
+            "fontPostScriptName": "Pretendard-Medium",
+            "fontStyle": "Medium",
+            "fontWeight": 500,
+            "textAutoResize": "HEIGHT",
+            "textTruncation": "ENDING",
+            "maxLines": 1,
+            "fontSize": 16,
+            "textAlignHorizontal": "LEFT",
+            "textAlignVertical": "TOP",
+            "letterSpacing": 0,
+            "lineHeightPx": 20,
+            "lineHeightPercent": 104.7463150024414,
+            "lineHeightPercentFontSize": 125,
+            "lineHeightUnit": "PIXELS",
+            "width": 432,
+            "height": 20,
+            "x": 24,
+            "y": 76,
+            "canBeFlattened": false,
+            "layoutMode": "NONE",
+            "primaryAxisAlignItems": "MIN",
+            "counterAxisAlignItems": "MIN"
+        }
+    ],
+    "blendMode": "PASS_THROUGH",
+    "clipsContent": false,
+    "background": [
+        {
+            "blendMode": "NORMAL",
+            "type": "SOLID",
+            "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+            }
+        }
+    ],
+    "fills": [
+        {
+            "blendMode": "NORMAL",
+            "type": "SOLID",
+            "color": {
+                "r": 1,
+                "g": 1,
+                "b": 1,
+                "a": 1
+            }
+        }
+    ],
+    "strokes": [],
+    "cornerRadius": 16,
+    "cornerSmoothing": 0,
+    "strokeWeight": 1,
+    "strokeAlign": "INSIDE",
+    "backgroundColor": {
+        "r": 1,
+        "g": 1,
+        "b": 1,
+        "a": 1
+    },
+    "layoutMode": "VERTICAL",
+    "counterAxisSizingMode": "FIXED",
+    "counterAxisAlignItems": "MAX",
+    "paddingLeft": 24,
+    "paddingRight": 24,
+    "paddingTop": 24,
+    "paddingBottom": 24,
+    "itemSpacing": 24,
+    "layoutWrap": "NO_WRAP",
+    "absoluteBoundingBox": {
+        "x": 1412,
+        "y": 242,
+        "width": 480,
+        "height": 120
+    },
+    "absoluteRenderBounds": {
+        "x": 1412,
+        "y": 242,
+        "width": 480,
+        "height": 120
+    },
+    "constraints": {
+        "vertical": "CENTER",
+        "horizontal": "CENTER"
+    },
+    "layoutSizingHorizontal": "FIXED",
+    "layoutSizingVertical": "HUG",
+    "effects": [],
+    "interactions": [],
+    "uniqueName": "AlertDialogue",
+    "width": 480,
+    "height": 120,
+    "x": 0,
+    "y": 0,
+    "canBeFlattened": false,
+    "layoutGrow": 0,
+    "primaryAxisAlignItems": "MIN"
+}

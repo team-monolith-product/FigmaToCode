@@ -1,0 +1,4 @@
+<div style={{width: 480, padding: 24, background: 'white', borderRadius: 16, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-end', gap: 24, display: 'inline-flex'}}>
+  <div style={{textAlign: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column', color: 'black', fontSize: 20, fontFamily: 'Pretendard', fontWeight: '700', lineHeight: 28, letterSpacing: 0.25, wordWrap: 'break-word'}}>영어가 아닌 제목</div>
+  <div style={{alignSelf: 'stretch', color: 'black', fontSize: 16, fontFamily: 'Pretendard', fontWeight: '500', lineHeight: 20, wordWrap: 'break-word'}}>영어가 아닌 본문</div>
+</div>

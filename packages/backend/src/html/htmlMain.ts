@@ -60,6 +60,9 @@ export let cssCollection: CSSCollection = {};
 // Instance counters for class name generation - we keep this but primarily as a fallback
 const classNameCounters: Map<string, number> = new Map();
 
+// Counter for component names to ensure uniqueness in styled-components
+const componentNameCounters: Map<string, number> = new Map();
+
 // Generate a class name - prefer direct uniqueId, but fall back to counter-based if needed
 export function generateUniqueClassName(prefix = "figma"): string {
   // Sanitize the prefix to ensure valid CSS class
@@ -81,6 +84,7 @@ export function generateUniqueClassName(prefix = "figma"): string {
 // Reset all class name counters - call this at the start of processing
 export function resetClassNameCounters(): void {
   classNameCounters.clear();
+  componentNameCounters.clear();
 }
 
 // Convert styles to CSS format
@@ -106,14 +110,14 @@ export function stylesToCSS(styles: string[], isJSX: boolean): string[] {
     .filter(Boolean); // Remove empty entries
 }
 
-// Get proper component name from node info
+// Get proper component name from node info with uniqueness guarantee
 export function getComponentName(
   nodeName: string | undefined,
   className: string,
   nodeType: string,
 ): string {
   // Start with Styled prefix
-  let name = "Styled";
+  let baseName = "Styled";
 
   // Try to use node name first
   if (nodeName && nodeName.length > 0) {
@@ -122,23 +126,28 @@ export function getComponentName(
       .replace(/[^a-zA-Z0-9]/g, "")
       .replace(/^[a-z]/, (match) => match.toUpperCase());
 
-    name += cleanName || nodeType.charAt(0).toUpperCase() + nodeType.slice(1);
+    baseName += cleanName || nodeType.charAt(0).toUpperCase() + nodeType.slice(1);
   }
   // Fall back to className if provided
   else if (className) {
     const parts = className.split("-");
     if (parts.length > 0 && parts[0]) {
-      name += parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+      baseName += parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
     } else {
-      name += nodeType.charAt(0).toUpperCase() + nodeType.slice(1);
+      baseName += nodeType.charAt(0).toUpperCase() + nodeType.slice(1);
     }
   }
   // Last resort
   else {
-    name += nodeType.charAt(0).toUpperCase() + nodeType.slice(1);
+    baseName += nodeType.charAt(0).toUpperCase() + nodeType.slice(1);
   }
 
-  return name;
+  // Ensure uniqueness using counter
+  const count = componentNameCounters.get(baseName) || 0;
+  componentNameCounters.set(baseName, count + 1);
+
+  // First occurrence: use baseName as-is, subsequent: append number (2, 3, ...)
+  return count === 0 ? baseName : `${baseName}${count + 1}`;
 }
 
 // Generate metadata comment from Figma component info
