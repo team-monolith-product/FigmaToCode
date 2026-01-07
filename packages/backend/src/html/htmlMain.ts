@@ -492,12 +492,11 @@ const htmlText = (node: TextNode, settings: HTMLSettings): string => {
         .filter((s: string) => s)
         .forEach((style: string) => layoutBuilder.addStyles(style));
 
-      // Determine element type: sub/sup or default p
-      const element = segment.openTypeFeatures.SUBS
-        ? "sub"
-        : segment.openTypeFeatures.SUPS
-          ? "sup"
-          : "p";
+      // Get element type from segment's cssEntry (sub/sup determined by builder)
+      const segmentCssEntry = segment.className ? cssCollection[segment.className] : null;
+      const segmentElement = segmentCssEntry?.element;
+      // Use sub/sup from segment, otherwise default to p for wrapper
+      const element = (segmentElement === "sub" || segmentElement === "sup") ? segmentElement : "p";
 
       // Build and store in cssCollection
       layoutBuilder.build();
@@ -530,19 +529,7 @@ const htmlText = (node: TextNode, settings: HTMLSettings): string => {
       cssCollection[layoutBuilder.cssClassName!]?.componentName || "div";
 
     const content = styledHtml
-      .map((style) => {
-        const tag =
-          style.openTypeFeatures.SUBS === true
-            ? "sub"
-            : style.openTypeFeatures.SUPS === true
-              ? "sup"
-              : "span";
-
-        if (style.componentName) {
-          return `<${style.componentName}>${style.text}</${style.componentName}>`;
-        }
-        return `<${tag}>${style.text}</${tag}>`;
-      })
+      .map((style) => `<${style.componentName}>${style.text}</${style.componentName}>`)
       .join("");
 
     return `\n<${wrapperComponentName}>${content}</${wrapperComponentName}>`;

@@ -105,8 +105,12 @@ export class HtmlTextBuilder extends HtmlDefaultBuilder {
           this.isJSX,
         );
 
-        // In both modes, use span for text segments to avoid selector conflicts
-        const elementTag = "span";
+        // Determine element based on openTypeFeatures (sub/sup)
+        const elementTag = segment.openTypeFeatures?.SUBS
+          ? "sub"
+          : segment.openTypeFeatures?.SUPS
+            ? "sup"
+            : "span";
 
         const componentName = getComponentName(segmentName, className, elementTag);
 
