@@ -422,7 +422,7 @@ export class HtmlDefaultBuilder {
     return this;
   }
 
-  async build(additionalStyle: Array<string> = []): Promise<string> {
+  async build(additionalStyle: Array<string> = [], elementOverride?: string): Promise<string> {
     this.addStyles(...additionalStyle);
 
     // Different handling based on generation mode
@@ -435,7 +435,7 @@ export class HtmlDefaultBuilder {
       this.styles.length > 0 &&
       this.cssClassName
     ) {
-      await this.storeStyles();
+      await this.storeStyles(elementOverride);
       return ""; // Return empty string as we're using the component directly
     }
 
@@ -472,7 +472,7 @@ export class HtmlDefaultBuilder {
     // For Svelte mode, we use classes
     if (mode === "svelte" && this.styles.length > 0 && this.cssClassName) {
       classNames.push(this.cssClassName);
-      await this.storeStyles();
+      await this.storeStyles(elementOverride);
       this.styles = []; // Clear inline styles for Svelte
     }
     // For styled-components, we need the class but keep styles for the component
@@ -482,7 +482,7 @@ export class HtmlDefaultBuilder {
       this.cssClassName
     ) {
       classNames.push(this.cssClassName);
-      await this.storeStyles();
+      await this.storeStyles(elementOverride);
       // Keep styles for styled-components
     }
 
@@ -504,24 +504,28 @@ export class HtmlDefaultBuilder {
   }
 
   // Extract style storage into a method to avoid duplication
-  private async storeStyles(): Promise<void> {
+  private async storeStyles(elementOverride?: string): Promise<void> {
     if (!this.cssClassName || this.styles.length === 0) return;
 
     // Convert to CSS format if needed
     const cssStyles = stylesToCSS(this.styles, this.isJSX);
 
-    // Both modes use the standard div/span elements, no need for semantic HTML inference
-    // which causes conflicts with duplicate tag selectors
-    let element = this.node.type === "TEXT" ? "p" : "div";
+    // Determine element type
+    let element: string;
+    if (elementOverride) {
+      // Use explicit override (e.g., sub/sup from openTypeFeatures)
+      element = elementOverride;
+    } else {
+      // Default based on node type
+      element = this.node.type === "TEXT" ? "p" : "div";
 
-    // Only override for really obvious cases
-    if ((this.node as any).name?.toLowerCase().includes("button")) {
-      element = "button";
-    } else if (
-      (this.node as any).name?.toLowerCase().includes("img") ||
-      (this.node as any).name?.toLowerCase().includes("image")
-    ) {
-      element = "img";
+      // Infer from name for obvious cases
+      const lowerName = (this.node as any).name?.toLowerCase();
+      if (lowerName?.includes("button")) {
+        element = "button";
+      } else if (lowerName?.includes("img") || lowerName?.includes("image")) {
+        element = "img";
+      }
     }
 
     const nodeName = (this.node as any).uniqueName || this.node.name;

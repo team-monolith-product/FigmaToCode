@@ -1,0 +1,371 @@
+{
+  "id": "5112:155",
+  "name": "Description",
+  "type": "TEXT",
+  "scrollBehavior": "SCROLLS",
+  "blendMode": "PASS_THROUGH",
+  "fills": [
+    {
+      "blendMode": "NORMAL",
+      "type": "SOLID",
+      "color": {
+        "r": 0,
+        "g": 0,
+        "b": 0,
+        "a": 1
+      }
+    }
+  ],
+  "strokes": [],
+  "strokeWeight": 0,
+  "strokeAlign": "CENTER",
+  "absoluteBoundingBox": {
+    "x": 984,
+    "y": 449,
+    "width": 102,
+    "height": 56
+  },
+  "absoluteRenderBounds": {
+    "x": 985.7459716796875,
+    "y": 454.66400146484375,
+    "width": 71.9927978515625,
+    "height": 17.675994873046875
+  },
+  "constraints": {
+    "vertical": "TOP",
+    "horizontal": "LEFT"
+  },
+  "characters": "H20 10100",
+  "characterStyleOverrides": [
+    2,
+    1,
+    2,
+    0,
+    2,
+    2
+  ],
+  "styleOverrideTable": {
+    "1": {},
+    "2": {}
+  },
+  "lineTypes": [
+    "NONE"
+  ],
+  "lineIndentations": [
+    0
+  ],
+  "style": {
+    "fontFamily": "Noto Sans",
+    "fontPostScriptName": "NotoSans-Regular",
+    "fontStyle": "Regular",
+    "fontWeight": 400,
+    "fontSize": 18,
+    "textAlignHorizontal": "LEFT",
+    "textAlignVertical": "TOP",
+    "letterSpacing": 0,
+    "lineHeightPx": 28,
+    "lineHeightPercent": 114.21112823486328,
+    "lineHeightPercentFontSize": 155.55555725097656,
+    "lineHeightUnit": "PIXELS"
+  },
+  "layoutVersion": 5,
+  "effects": [],
+  "interactions": [],
+  "uniqueName": "Description",
+  "styledTextSegments": [
+    {
+      "characters": "H",
+      "start": 0,
+      "end": 1,
+      "fontSize": 18,
+      "fontName": {
+        "family": "Noto Sans",
+        "style": "Regular"
+      },
+      "fontWeight": 400,
+      "textDecoration": "NONE",
+      "textCase": "ORIGINAL",
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 28
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "boundVariables": {}
+        }
+      ],
+      "textStyleId": "",
+      "fillStyleId": "",
+      "listOptions": {
+        "type": "NONE"
+      },
+      "indentation": 0,
+      "hyperlink": null,
+      "openTypeFeatures": {},
+      "uniqueId": "description_span_01"
+    },
+    {
+      "characters": "2",
+      "start": 1,
+      "end": 2,
+      "fontSize": 18,
+      "fontName": {
+        "family": "Noto Sans",
+        "style": "Regular"
+      },
+      "fontWeight": 400,
+      "textDecoration": "NONE",
+      "textCase": "ORIGINAL",
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 28
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "boundVariables": {}
+        }
+      ],
+      "textStyleId": "",
+      "fillStyleId": "",
+      "listOptions": {
+        "type": "NONE"
+      },
+      "indentation": 0,
+      "hyperlink": null,
+      "openTypeFeatures": {
+        "SUBS": true
+      },
+      "uniqueId": "description_span_02"
+    },
+    {
+      "characters": "0",
+      "start": 2,
+      "end": 3,
+      "fontSize": 18,
+      "fontName": {
+        "family": "Noto Sans",
+        "style": "Regular"
+      },
+      "fontWeight": 400,
+      "textDecoration": "NONE",
+      "textCase": "ORIGINAL",
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 28
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "boundVariables": {}
+        }
+      ],
+      "textStyleId": "",
+      "fillStyleId": "",
+      "listOptions": {
+        "type": "NONE"
+      },
+      "indentation": 0,
+      "hyperlink": null,
+      "openTypeFeatures": {},
+      "uniqueId": "description_span_03"
+    },
+    {
+      "characters": " ",
+      "start": 3,
+      "end": 4,
+      "fontSize": 18,
+      "fontName": {
+        "family": "Noto Sans",
+        "style": "Regular"
+      },
+      "fontWeight": 400,
+      "textDecoration": "NONE",
+      "textCase": "ORIGINAL",
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 28
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "boundVariables": {}
+        }
+      ],
+      "textStyleId": "",
+      "fillStyleId": "",
+      "listOptions": {
+        "type": "NONE"
+      },
+      "indentation": 0,
+      "hyperlink": null,
+      "openTypeFeatures": {
+        "SUPS": true
+      },
+      "uniqueId": "description_span_04"
+    },
+    {
+      "characters": "10",
+      "start": 4,
+      "end": 6,
+      "fontSize": 18,
+      "fontName": {
+        "family": "Noto Sans",
+        "style": "Regular"
+      },
+      "fontWeight": 400,
+      "textDecoration": "NONE",
+      "textCase": "ORIGINAL",
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 28
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "boundVariables": {}
+        }
+      ],
+      "textStyleId": "",
+      "fillStyleId": "",
+      "listOptions": {
+        "type": "NONE"
+      },
+      "indentation": 0,
+      "hyperlink": null,
+      "openTypeFeatures": {},
+      "uniqueId": "description_span_05"
+    },
+    {
+      "characters": "100",
+      "start": 6,
+      "end": 9,
+      "fontSize": 18,
+      "fontName": {
+        "family": "Noto Sans",
+        "style": "Regular"
+      },
+      "fontWeight": 400,
+      "textDecoration": "NONE",
+      "textCase": "ORIGINAL",
+      "lineHeight": {
+        "unit": "PIXELS",
+        "value": 28
+      },
+      "letterSpacing": {
+        "unit": "PIXELS",
+        "value": 0
+      },
+      "fills": [
+        {
+          "type": "SOLID",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "color": {
+            "r": 0,
+            "g": 0,
+            "b": 0
+          },
+          "boundVariables": {}
+        }
+      ],
+      "textStyleId": "",
+      "fillStyleId": "",
+      "listOptions": {
+        "type": "NONE"
+      },
+      "indentation": 0,
+      "hyperlink": null,
+      "openTypeFeatures": {
+        "SUPS": true
+      },
+      "uniqueId": "description_span_06"
+    }
+  ],
+  "fontFamily": "Noto Sans",
+  "fontPostScriptName": "NotoSans-Regular",
+  "fontStyle": "Regular",
+  "fontWeight": 400,
+  "fontSize": 18,
+  "textAlignHorizontal": "LEFT",
+  "textAlignVertical": "TOP",
+  "letterSpacing": 0,
+  "lineHeightPx": 28,
+  "lineHeightPercent": 114.21112823486328,
+  "lineHeightPercentFontSize": 155.55555725097656,
+  "lineHeightUnit": "PIXELS",
+  "textAutoResize": "NONE",
+  "width": 102,
+  "height": 56,
+  "x": 0,
+  "y": 0,
+  "canBeFlattened": false,
+  "layoutMode": "NONE",
+  "layoutGrow": 0,
+  "layoutSizingHorizontal": "FIXED",
+  "layoutSizingVertical": "FIXED",
+  "primaryAxisAlignItems": "MIN",
+  "counterAxisAlignItems": "MIN"
+}

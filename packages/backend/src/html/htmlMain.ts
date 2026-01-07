@@ -517,6 +517,36 @@ const htmlText = async (node: TextNode, settings: HTMLSettings): Promise<string>
 
   // For styled-components mode
   if (mode === "styled-components") {
+    // Single segment optimization: merge wrapper and segment styles
+    if (styledHtml.length === 1) {
+      const segment = styledHtml[0];
+
+      // Merge segment styles into wrapper
+      segment.style
+        .split(";")
+        .map((s: string) => s.trim())
+        .filter((s: string) => s)
+        .forEach((style: string) => layoutBuilder.addStyles(style));
+
+      // Get element type from segment's cssEntry (sub/sup determined by builder)
+      const segmentCssEntry = segment.className ? cssCollection[segment.className] : null;
+      const segmentElement = segmentCssEntry?.element;
+      // Use sub/sup from segment, otherwise default to p for wrapper
+      const element = (segmentElement === "sub" || segmentElement === "sup") ? segmentElement : "p";
+
+      // Build and store in cssCollection with element override
+      layoutBuilder.build([], element);
+
+      // Clean up segment's separate CSS entry
+      if (segment.className) {
+        delete cssCollection[segment.className];
+      }
+
+      const componentName = cssCollection[layoutBuilder.cssClassName!]?.componentName || "p";
+      return `\n<${componentName}>${segment.text}</${componentName}>`;
+    }
+
+    // Multi-segment handling (2+ segments)
     // Build wrapper to store in cssCollection
     await layoutBuilder.build();
 
@@ -524,19 +554,7 @@ const htmlText = async (node: TextNode, settings: HTMLSettings): Promise<string>
       cssCollection[layoutBuilder.cssClassName!]?.componentName || "div";
 
     const content = styledHtml
-      .map((style) => {
-        const tag =
-          style.openTypeFeatures.SUBS === true
-            ? "sub"
-            : style.openTypeFeatures.SUPS === true
-              ? "sup"
-              : "span";
-
-        if (style.componentName) {
-          return `<${style.componentName}>${style.text}</${style.componentName}>`;
-        }
-        return `<${tag}>${style.text}</${tag}>`;
-      })
+      .map((style) => `<${style.componentName}>${style.text}</${style.componentName}>`)
       .join("");
 
     return `\n<${wrapperComponentName}>${content}</${wrapperComponentName}>`;
