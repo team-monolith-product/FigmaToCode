@@ -18,6 +18,29 @@ export class HtmlTextBuilder extends HtmlDefaultBuilder {
     super(node, settings);
   }
 
+  /**
+   * Returns CSS styles for text truncation (ellipsis).
+   * When textTruncation is "ENDING" and maxLines is set, returns appropriate CSS.
+   */
+  textTruncation(node: TextNode): { [key: string]: string } {
+    const truncationStyles: { [key: string]: string } = {};
+
+    if (node.textTruncation !== "DISABLED" && node.maxLines && node.maxLines > 0) {
+      truncationStyles["overflow"] = "hidden";
+      truncationStyles["text-overflow"] = "ellipsis";
+
+      if (node.maxLines === 1) {
+        truncationStyles["white-space"] = "nowrap";
+      } else {
+        truncationStyles["display"] = "-webkit-box";
+        truncationStyles["-webkit-line-clamp"] = `${node.maxLines}`;
+        truncationStyles["-webkit-box-orient"] = "vertical";
+      }
+    }
+
+    return truncationStyles;
+  }
+
   // Override htmlElement to ensure text nodes use paragraph elements
   get htmlElement(): string {
     return "p";
@@ -49,6 +72,9 @@ export class HtmlTextBuilder extends HtmlDefaultBuilder {
         additionalStyles["text-shadow"] = textShadowStyle;
       }
 
+      // Add text truncation styles (ellipsis)
+      const truncationStyles = this.textTruncation(node);
+
       const styleAttributes = formatMultipleJSX(
         {
           color: htmlColorFromFills(segment.fills as any),
@@ -65,6 +91,7 @@ export class HtmlTextBuilder extends HtmlDefaultBuilder {
           ),
           // "text-indent": segment.indentation,
           "word-wrap": "break-word",
+          ...truncationStyles,
           ...additionalStyles,
         },
         this.isJSX,

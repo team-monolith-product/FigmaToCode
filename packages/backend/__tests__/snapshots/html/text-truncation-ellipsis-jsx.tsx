@@ -1,0 +1,1 @@
+<div style={{width: 185, color: 'black', fontSize: 16, fontFamily: 'Noto Sans', fontWeight: '500', lineHeight: 20, wordWrap: 'break-word', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap'}}>Very long long long long long long long long text<br/></div>
