@@ -481,6 +481,48 @@ const htmlText = (node: TextNode, settings: HTMLSettings): string => {
 
   // For styled-components mode
   if (mode === "styled-components") {
+    // Single segment optimization: merge wrapper and segment styles
+    if (styledHtml.length === 1) {
+      const segment = styledHtml[0];
+
+      // Merge segment styles into wrapper
+      segment.style
+        .split(";")
+        .map((s: string) => s.trim())
+        .filter((s: string) => s)
+        .forEach((style: string) => layoutBuilder.addStyles(style));
+
+      // Determine element type: sub/sup or default p
+      const element = segment.openTypeFeatures.SUBS
+        ? "sub"
+        : segment.openTypeFeatures.SUPS
+          ? "sup"
+          : "p";
+
+      // Build and store in cssCollection
+      layoutBuilder.build();
+
+      // Override element type for sub/sup
+      const cssEntry = cssCollection[layoutBuilder.cssClassName!];
+      if (cssEntry && element !== "p") {
+        cssEntry.element = element;
+        cssEntry.componentName = getComponentName(
+          (layoutBuilder as any).node?.uniqueName || (layoutBuilder as any).node?.name,
+          layoutBuilder.cssClassName!,
+          element,
+        );
+      }
+
+      // Clean up segment's separate CSS entry
+      if (segment.className) {
+        delete cssCollection[segment.className];
+      }
+
+      const componentName = cssEntry?.componentName || "p";
+      return `\n<${componentName}>${segment.text}</${componentName}>`;
+    }
+
+    // Multi-segment handling (2+ segments)
     // Build wrapper to store in cssCollection
     layoutBuilder.build();
 
