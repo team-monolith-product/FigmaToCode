@@ -16,7 +16,7 @@
     "copy-to-clipboard": "^3.3.3",
     "lucide-react": "^0.483.0",
     "motion": "^12.23.25",
-    "nanoid": "^5.1.6",
+    "nanoid": "^5.1.16",
     "plugin-ui": "workspace:*",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
